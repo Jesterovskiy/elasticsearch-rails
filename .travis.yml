@@ -41,6 +41,10 @@ matrix:
       jdk: oraclejdk8
       env: RAILS_VERSIONS=4.0,5.0
 
+    - rvm: 2.6
+      jdk: oraclejdk8
+      env: RAILS_VERSIONS=4.0,5.0
+
 env:
   global:
     - ELASTICSEARCH_VERSION=7.0.0-alpha1

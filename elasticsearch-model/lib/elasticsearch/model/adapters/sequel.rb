@@ -11,11 +11,18 @@ module Elasticsearch
         # Module for implementing methods and logic related to fetching records from the database
         #
         module Records
+          attr_writer :options
+
+          def options
+            @options ||= {}
+          end
 
           # Return the collection of records fetched from the database
           #
           def records
-            klass.where(klass.primary_key => ids)
+            sql_records = klass.where(klass.primary_key => ids)
+            sql_records = sql_records.includes(self.options[:includes]) if self.options[:includes]
+            sql_records
           end
         end
 
@@ -63,7 +70,6 @@ module Elasticsearch
               target.dataset.use_cursor(options).each_slice(rows_per_fetch, &block)
             else
               items = []
-
               target.dataset.paged_each(options) do |item|
                 items << item
                 if items.length % rows_per_fetch == 0

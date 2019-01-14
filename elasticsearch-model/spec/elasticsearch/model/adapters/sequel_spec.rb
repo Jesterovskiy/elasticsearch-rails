@@ -71,17 +71,13 @@ describe Elasticsearch::Model::Adapter::Sequel do
       expect(instance.records).to eq(records)
     end
 
-    xit 'loads the records' do
-      expect(instance.load).to eq(true)
-    end
-
     context 'when :includes is specified' do
       before do
         expect(records).to receive(:includes).with([:submodel]).once.and_return(records)
         instance.options[:includes] = [:submodel]
       end
 
-      xit 'incorporates the includes option in the query' do
+      it 'incorporates the includes option in the query' do
         expect(instance.records).to eq(records)
       end
     end
@@ -92,7 +88,7 @@ describe Elasticsearch::Model::Adapter::Sequel do
       expect(DummyClassForSequel).to receive(:after_commit).exactly(3).times
     end
 
-    xit 'should register the model class for callbacks' do
+    it 'should register the model class for callbacks' do
       Elasticsearch::Model::Adapter::Sequel::Callbacks.included(DummyClassForSequel)
     end
   end
